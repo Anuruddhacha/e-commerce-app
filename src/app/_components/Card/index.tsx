@@ -2,7 +2,6 @@
 
 import React, { Fragment, useEffect, useState } from 'react'
 import Link from 'next/link'
-
 import { Product } from '../../../payload/payload-types'
 import { Media } from '../Media'
 import { Price } from '../Price'
@@ -67,41 +66,17 @@ export const Card: React.FC<{
   }, [priceJSON])
 
   return (
-    <div className={[classes.card, className].filter(Boolean).join(' ')}>
-      <Link href={href} className={classes.mediaWrapper}>
+    <Link href={href} className={[classes.card, className].filter(Boolean).join(' ')}>
+      <div  className={classes.mediaWrapper}>
         {!metaImage && <div className={classes.placeholder}>No image</div>}
         {metaImage && typeof metaImage !== 'string' && (
           <Media imgClassName={classes.image} resource={metaImage} fill />
         )}
-      </Link>
+      </div>
       <div className={classes.content}>
-        {showCategories && hasCategories && (
-          <div className={classes.leader}>
-            {showCategories && hasCategories && (
-              <div>
-                {categories?.map((category, index) => {
-                  const { title: titleFromCategory } = category
-
-                  const categoryTitle = titleFromCategory || 'Untitled category'
-
-                  const isLast = index === categories.length - 1
-
-                  return (
-                    <Fragment key={index}>
-                      {categoryTitle}
-                      {!isLast && <Fragment>, &nbsp;</Fragment>}
-                    </Fragment>
-                  )
-                })}
-              </div>
-            )}
-          </div>
-        )}
         {titleToUse && (
           <h4 className={classes.title}>
-            <Link href={href} className={classes.titleLink}>
-              {titleToUse}
-            </Link>
+            {titleToUse}
           </h4>
         )}
         {description && (
@@ -111,6 +86,6 @@ export const Card: React.FC<{
         )}
         {doc && <Price product={doc} />}
       </div>
-    </div>
+    </Link>
   )
 }
